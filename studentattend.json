@@ -1,0 +1,16 @@
+[
+    {
+        "studentattendance": "SA-1",
+        "date": "12/05/2026",
+        "student_id": "S-001",
+        "timetable": "Monday",
+        "status": "Present"
+    },
+    {
+        "studentattendance": "SA-2",
+        "date": "13/04/2026",
+        "student_id": "s002",
+        "timetable": "Tuesday",
+        "status": "Present"
+    }
+]

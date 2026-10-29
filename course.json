@@ -1,0 +1,14 @@
+[
+    {
+        "course_id": "C-1",
+        "course_name": "BIT",
+        "course_code": "D004",
+        "faculty": "Science and Technology"
+    },
+    {
+        "course_id": "C-2",
+        "course_name": "",
+        "course_code": "",
+        "faculty": ""
+    }
+]
