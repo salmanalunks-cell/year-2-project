@@ -168,13 +168,10 @@ class StudentAttendance(Attendance):
 
        return self.attendance_marks[self.get_status]
 
-    # @classmethod
-    # def present(cls):
-    #     if cls.get_status == "Present":
-    #         return 1
-                
+
+    
     def __str__(self):
-        return f"{self.id} -> {self.date}  -> {self.student_id} -> {self.get_status } -> {self.get_attendance_marks()}"
+        return f"{self.id} -> {self.date}  -> {self.student_id} -> {self.get_attendance_marks()} -> {self.get_status }"
     
 class LecturerAttendance(Attendance):
     lecturerattendance = 0
