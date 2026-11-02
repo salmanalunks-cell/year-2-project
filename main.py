@@ -220,7 +220,9 @@ while True:
                 "date": studentattendance.date,
                 "student_id": studentattendance.student_id,
                 "timetable": studentattendance.timetable,
-                "status": studentattendance.get_status(),
+                "status": studentattendance.get_status,
+                "attendance_marks": studentattendance.get_attendance_marks()
+                
 
                 
             }

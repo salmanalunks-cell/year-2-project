@@ -122,44 +122,59 @@ class Timetable:
 
 
 class Attendance(ABC):
-    def __init__(self,id, date, ):
+    def __init__(self,id, date ):
         self.id = id
         self.date = date
         self.__status = "Present"
-    def get_status(self):
-        return self.__status
 
-    @property
     def update_status(self, value):
         if value in ["Present", "Absent"]:
-            self.status = value
+            self.__status = value
         else:
             print("Invalid option")
 
-    def __str__(self):
-        return f"{self.id} -> {self.date} -> {self.get_status()}"
+   
+    @property
+    def get_status(self):
+            return self.__status
     
+    @abstractmethod
+    def __str__(self):
+        pass
+       
 class StudentAttendance(Attendance):
+    
     studentattendance = 0
+    attendance_marks = {
+    "Present": 1,
+    "Absent": 0
+}   
 
-    def __init__(self, id, date,  student_id, timetable,attendance_marks):
+    def __init__(self, id, date,  student_id, timetable):
         super(). __init__(id , date)
         self.student_id = student_id
         self.timetable = timetable
-        self.__status = "Present"
-        self.attendance_marks = attendance_marks
+
+        
+        
     @classmethod
     def generate_id(cls):
         sa = "SA-"
         cls.studentattendance +=1
         return sa + str(cls.studentattendance)
+
     
-    def get_status(self):
-        return self.__status
-    
+    def get_attendance_marks(self):
+
+       return self.attendance_marks[self.get_status]
+
+    # @classmethod
+    # def present(cls):
+    #     if cls.get_status == "Present":
+    #         return 1
                 
     def __str__(self):
-        return f"{self.id} -> {self.date}  -> {self.student_id} -> {self.get_status()} "
+        return f"{self.id} -> {self.date}  -> {self.student_id} -> {self.get_status } -> {self.get_attendance_marks()}"
     
 class LecturerAttendance(Attendance):
     lecturerattendance = 0
@@ -177,7 +192,7 @@ class LecturerAttendance(Attendance):
           
         
     def __str__(self):
-        return f"{self.id} -> {self.date} -> {self.lecturer_id} -> {self.get_status()}"
+        return f"{self.id} -> {self.date} -> {self.lecturer_id} -> {self.get_status}"
         
     
 
