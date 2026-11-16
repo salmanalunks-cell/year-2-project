@@ -1,0 +1,18 @@
+[
+    {
+        "student_id": "St-1",
+        "student_first_name": "Rania",
+        "student_last_name": "Aisha",
+        "contact": "077777777",
+        "registration_number": "225",
+        "year_of_study": "year 2",
+        "gender": "female",
+        "email": " RaniaAisha@iuiu.ac",
+        "course": {
+            "course_id": "C1010",
+            "course_name": "computer science",
+            "course_code": "BSCS",
+            "faculty": "Faculty of Science"
+        }
+    }
+]

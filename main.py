@@ -270,21 +270,21 @@ while True:
             lecturerattendance_id = LecturerAttendance.generate_id()
             date = input("Enter the date(dd/mm/yyyy): ")
             lecturer_id = input ("Enter the lecturer id : ")
-            status = input("Enter status: ")
             
-            lecturerattendance = LecturerAttendance(lecturerattendance_id, date, lecturer_id, status)
+            
+            lecturerattendance = LecturerAttendance(lecturerattendance_id, date, lecturer_id)
             
             new_lecturerattendance = {
                 "lecturerattendance_id" : lecturerattendance.id,
                 "date" : lecturerattendance.date,
                 "lecturer_id" : lecturerattendance.lecturer_id,
-                "status": lecturerattendance.get_status
+                "status": lecturerattendance.get_status()
             }
             
             with open("lecturerattend.json", "r")as doc:
                 LecturerAttendance_list = json.load(doc)
                 
-            with open("lecturerattend", "w")as doc:
+            with open("lecturerattend.json", "w")as doc:
                 LecturerAttendance_list.append(new_lecturerattendance)
                 json.dump( LecturerAttendance_list, doc, indent = 4)
                 

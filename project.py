@@ -194,8 +194,8 @@ class StudentAttendance(Attendance):
 class LecturerAttendance(Attendance):
     lecturerattendance = 0
 
-    def __init__(self, id ,date,  lecturer_id, status):
-        super(). __init__(id, date, status)
+    def __init__(self, id ,date,  lecturer_id):
+        super(). __init__(id, date)
         self.lecturer_id = lecturer_id
             
     @classmethod
@@ -205,12 +205,12 @@ class LecturerAttendance(Attendance):
         return la + str(cls.lecturerattendance)
     
     
-    def get_status(self, ):
+    def get_status(self):
         if self._status == 1:
             
-            return "Present"
+            return "Taught"
         else:
-            return "Absent"
+            return "Missed"
     
     
         
