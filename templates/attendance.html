@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student and Lecturer Attendance Page</title>
+</head>
+
+<body>
+
+    <h1>Manage Student and Lecturer Attendance</h1>
+
+    <h3>Record Attendance</h3>
+
+    <!-- Form for recording attendance -->
+
+    <form action="/project" method="POST">
+
+        <label for="name">Student/Lecturer Name:</label>
+        <input type="text" id="name" name="name"
+               placeholder="Enter name" required>
+        <br><br>
+
+        <label for="registration">Registration/Staff Number:</label>
+        <input type="text" id="registration" name="registration"
+               placeholder="Enter registration or staff number" required>
+        <br><br>
+
+        <label for="course">Course/Subject:</label>
+        <input type="text" id="course" name="course"
+               placeholder="Enter course or subject" required>
+        <br><br>
+
+        <!-- Dropdown for attendance category -->
+
+        <label for="category">Attendance Category:</label>
+
+        <select id="category" name="category" required>
+            <option value="">-- Select Category --</option>
+            <option value="student">Student</option>
+            <option value="lecturer">Lecturer</option>
+        </select>
+
+        <br><br>
+
+        <label for="date">Attendance Date:</label>
+        <input type="date" id="date" name="date" required>
+        <br><br>
+
+        <!-- Dropdown for attendance status -->
+
+        <label for="status">Attendance Status:</label>
+
+        <select id="status" name="status" required>
+            <option value="">-- Select Status --</option>
+            <option value="present">Present</option>
+            <option value="absent">Absent</option>
+            <option value="late">Late</option>
+        </select>
+
+        <br><br>
+
+        <button type="submit">Record Attendance</button>
+
+    </form>
+
+    <h2>Total Attendance Records: {{attendance_count}}</h2>
+
+    <h2>Attendance Records</h2>
+
+    <ol>
+        {% for item in attendance_list %}
+        <li>{{item}}</li>
+        {% endfor %}
+    </ol>
+
+    <!-- Second attendance form -->
+
+    <h2>Attendance Information</h2>
+
+    <form action="/add_attendance" method="POST">
+
+        <label for="name2">Name:</label><br>
+        <input type="text" id="name2" name="name"
+               placeholder="Enter student or lecturer name" required>
+        <br><br>
+
+        <label for="registration2">Registration/Staff Number:</label><br>
+        <input type="text" id="registration2" name="registration"
+               placeholder="Enter identification number" required>
+        <br><br>
+
+        <label for="course2">Course/Subject:</label><br>
+        <input type="text" id="course2" name="course"
+               placeholder="Enter course or subject" required>
+        <br><br>
+
+        <label for="category2">Category:</label><br>
+
+        <select id="category2" name="category" required>
+            <option value="">-- Select Category --</option>
+            <option value="student">Student</option>
+            <option value="lecturer">Lecturer</option>
+        </select>
+
+        <br><br>
+
+        <label for="status2">Attendance Status:</label><br>
+
+        <select id="status2" name="status" required>
+            <option value="">-- Select Status --</option>
+            <option value="present">Present</option>
+            <option value="absent">Absent</option>
+            
+        </select>
+
+        <br><br>
+
+        <button type="submit">Submit Attendance</button>
+        
+    </form>
+
+    <h2>Student and Lecturer Attendance Records</h2>
+
+    <!-- Table displaying example attendance records -->
+
+    <table border="1" cellpadding="10">
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Registration/Staff Number</th>
+                <th>Course/Subject</th>
+                <th>Category</th>
+                <th>Attendance Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr>
+                <td>1</td>
+                <td>Sarah</td>
+                <td>STU001</td>
+                <td>Computer Science</td>
+                <td>Student</td>
+                <td>2026-11-10</td>
+                <td>Present</td>
+            </tr>
+
+            
+
+
+            <tr>
+                <td>3</td>
+                <td>Mary</td>
+                <td>STU002</td>
+                <td>Programming</td>
+                <td>Student</td>
+                <td>2026-11-10</td>
+                <td>Absent</td>
+            </tr>
+
+        </tbody>
+
+    </table>
+    
+    <h2>Attendance Management Guidelines</h2>
+
+    <ul>
+        <li>Enter the student or lecturer name.</li>
+        <li>Enter the registration or staff number.</li>
+        <li>Enter the course or subject.</li>
+        <li>Select the attendance category.</li>
+        <li>Choose the attendance date.</li>
+        <li>Select the attendance status.</li>
+    </ul>
+
+    <h2>Steps for Recording Attendance</h2>
+
+    <ol>
+        <li>Fill in the student or lecturer details.</li>
+        <li>Enter the registration or staff number.</li>
+        <li>Select the attendance category.</li>
+        <li>Choose the attendance status.</li>
+        <li>Click the Record Attendance button.</li>
+    </ol>
+
+    <h2>Go to Other Pages</h2>
+
+    <p><a href="index.html">Go to Home Page</a></p>
+
+    <p><a href="main.html">Go to Main Attendance Page</a></p>
+
+    <img src="images/switch.png" alt="Attendance Image"
+         width="500" height="600">
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Attendance Page</title>
+</head>
+
+<body>
+
+    <h1>Manage Student  Attendance</h1>
+
+    <a href="index.html">Back to Index</a>
+
+    <p>Welcome to the student  attendance management page.</p>
+
+    <a href="index.html">Back to Home</a>
+
+    <h2>Choose Attendance Category</h2>
+
+    <!-- Dropdown menu for attendance categories -->
+
+    <label for="category"> Attendance Category:</label>
+
+    <select id="category" name="category">
+        <option value="">-- Select Category --</option>
+        <option value="student">Student Attendance</option>
+        <option value="present">Present</option>
+        <option value="absent">Absent</option>
+    </select>
+
+    <h2> Student Attendance Records</h2>
+
+    <!-- Table for student  records -->
+
+    <table border="1" cellpadding="10">
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Faculty</th>
+                <th>Gender</th>
+                <th>contact</th>
+                <th>reg_no</th>
+                <th>course</th>
+                
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>St-001</td>
+                <td>Atiku</td>
+                <td>Sarah</td>
+                <td>FETSA</td>
+                <td>Female</td>
+                <td>0788695467</td>
+                <td>225-001</td>
+                <td>BIT</td>
+
+            </tr>
+
+            
+
+            <tr>
+                 <td>St-002</td>
+                <td>Masanso</td>
+                <td>Malik</td>
+                <td>FETSA</td>
+                <td>male</td>
+                <td>07885678467</td>
+                <td>225-002</td>
+                <td>BIT</td>
+            
+            </tr>
+        </tbody>
+        
+    </table>
+
+    <h2>Go to Other Pages</h2>
+
+    <a href="attendance.html">attendance Page</a>
+
+
+
+<form action="{{ url_for('activity') }}" method="GET">
+
+    <label for="category">Choose Attendance Category:</label>
+
+    <select id="category"
+            name="category"
+            onchange="this.form.submit()">
+
+        <option value="">All Attendance Records</option>
+
+        <option value="student"
+            {% if selected_category == 'student' %}selected{% endif %}>
+            Student Attendance
+        </option>
+
+        <option value="lecturer"
+            {% if selected_category == 'lecturer' %}selected{% endif %}>
+            Lecturer Attendance
+        </option>
+
+    </select>
+
+    <noscript>
+        <button type="submit">Filter Records</button>
+    </noscript>
+
+</form>
+
+
+</body>
+</html>

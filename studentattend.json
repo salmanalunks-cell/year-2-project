@@ -1,18 +1,2 @@
-[
-    {
-        "studentattendance": "SA-4",
-        "date": "25/08/2026",
-        "student_id": "s001",
-        "timetable": "Monday",
-        "status": 1,
-        "attendance_marks": "Present"
-    },
-    {
-        "studentattendance": "SA-5",
-        "date": "25/08/2026",
-        "student_id": "s001",
-        "timetable": "Monday",
-        "status": 1,
-        "attendance_marks": "Present"
-    }
-]
+
+[]
