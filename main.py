@@ -4,15 +4,8 @@ import json
 
 
 def load_records(filename):
-    # Avoid json.load failing when a data file is empty or not yet created.
-    """Load a JSON list, treating an empty file as an empty list."""
-    try:
-        with open(filename, "r", encoding="utf-8") as doc:
-            records = json.load(doc)
-    except (FileNotFoundError, json.JSONDecodeError):
-        return []
-    if not isinstance(records, list):
-        raise ValueError(f"{filename} must contain a JSON list")
+    with open(filename, "r", encoding="utf-8") as doc:
+        records = json.load(doc)
     return records
 
 
@@ -190,43 +183,39 @@ while True:
             else:
                 break
 
+
+    
     elif choice == "6":
         while True:
-            # Study sessions must reference a timetable that was actually registered.
-            available_timetables = load_records("timetable.json")
-            if not available_timetables:
-                print("No timetables are registered. Add a timetable first using option 5.")
-                break
-
             study_session_id = Studysession.generate_id()
             academic_year = input("Enter the academic year: ")
             semester = input("Enter the semester: ")
 
             print("Available timetables:")
+            available_timetables = load_records("timetable.json")
+
             for index, timetable_data in enumerate(available_timetables, start=1):
-                print(
-                    f"{index}. {timetable_data['session']} | {timetable_data['day']} | "
-                    f"{timetable_data['course_unit']} | {timetable_data['lecturer']} | "
-                    f"{timetable_data['start_time']}-{timetable_data['end_time']}"
-                )
+                print(f"{index}. {timetable_data['session']} | {timetable_data['day']} | {timetable_data['course_unit']} | {timetable_data['lecturer']} | {timetable_data['start_time']} - {timetable_data['end_time']}")
 
-            timetable_choice = input("Choose a timetable number: ")
-            if not timetable_choice.isdigit() or not 1 <= int(timetable_choice) <= len(available_timetables):
-                print("Invalid timetable choice. Study session was not saved.")
-                continue
+            timetable_choice = int(input("Choose a timetable number: "))
 
-            # Rebuild the selected saved record as a Timetable object for Studysession.
-            my_timetable = Timetable(**available_timetables[int(timetable_choice) - 1])
+            my_timetable = Timetable(**available_timetables[timetable_choice - 1])
+
             studysession = Studysession(study_session_id, academic_year, semester, my_timetable)
 
-         
             new_studysession = {
                 "study_session_id": studysession.study_session_id,
                 "academic_year": studysession.academic_year,
                 "semester": studysession.semester,
-                "timetable": studysession.timetable.__dict__,
+                "timetable": {
+                    "session": my_timetable.session,
+                    "day": my_timetable.day,
+                    "course_unit": my_timetable.course_unit,
+                    "lecturer": my_timetable.lecturer,
+                    "start_time": my_timetable.start_time,
+                    "end_time": my_timetable.end_time
+                }
             }
-
 
             Studysession_list = load_records("studysession.json")
             Studysession_list.append(new_studysession)

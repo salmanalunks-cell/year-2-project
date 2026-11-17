@@ -96,6 +96,7 @@ class Lecturer:
         return f"{self.lecturer_id} -> {self.first_name} {self.last_name} -> {self.faculty} -> {self.gender} -> {self.contact} -> {self.email} -> {self.department}"
 
 
+
 class Timetable:
     timetable = 0
 
@@ -114,8 +115,7 @@ class Timetable:
         return tt + str(cls.timetable)
 
     def __str__(self):
-        return f"{self.day} | {self.course_unit} | {self.lecturer} | {self.start_time} - {self.end_time}"
-
+        return f"{self.session} | {self.day} | {self.course_unit} | {self.lecturer} | {self.start_time} - {self.end_time}"
 
 class Studysession:
     studysession = 0
