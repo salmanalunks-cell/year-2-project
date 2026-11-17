@@ -1,1 +1,18 @@
-[]
+[
+    {
+        "session": "Timetable-1",
+        "day": "monday",
+        "course_unit": "prog",
+        "lecturer": "salma",
+        "start_time": "11:00",
+        "end_time": "1:00"
+    },
+    {
+        "session": "Timetable-2",
+        "day": "tuesday",
+        "course_unit": "networking",
+        "lecturer": "asad",
+        "start_time": "8:00",
+        "end_time": "10:00"
+    }
+]
