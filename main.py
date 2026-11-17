@@ -153,70 +153,75 @@ while True:
                 break
 
 
+
+   
     elif choice == "5":
-            while True:
-                with open("studysession.json", "r") as doc:
-                    Studysession_list = json.load(doc)
-    
-                study_session_id = input("Enter study session ID: ")
-    
-                for session in Studysession_list:
-                    if session["study_session_id"] == study_session_id:
-                        studysession = Studysession(
-                            session["study_session_id"],
-                            session["academic_year"],
-                            session["semester"]
+        while True:
+            with open("studysession.json", "r") as doc:
+                Studysession_list = json.load(doc)
+
+            study_session_id = input("Enter study session ID: ")
+
+            for session in Studysession_list:
+                if session["study_session_id"] == study_session_id:
+                    studysession = Studysession(
+                        session["study_session_id"],
+                        session["academic_year"],
+                        session["semester"]
+                    )
+
+                    studysession.timetables = [
+                        Timetable(
+                            t["session"], t["day"], t["course_unit"],
+                            t["lecturer"], t["start_time"], t["end_time"]
                         )
-    
-                        studysession.timetables = [
-                            Timetable(
-                                t["session"], t["day"], t["course_unit"],
-                                t["lecturer"], t["start_time"], t["end_time"]
-                            )
-                            for t in session["timetables"]
-                        ]
-    
-                        timetable_id = Timetable.generate_id()
-                        day = input("Enter day: ")
-                        course_unit = input("Enter course unit: ")
-                        lecturer = input("Enter lecturer: ")
-                        start_time = input("Enter start time: ")
-                        end_time = input("Enter end time: ")
-    
-                        timetable = Timetable(timetable_id, day, course_unit, lecturer, start_time, end_time)
-    
-                        studysession.add_timetable(timetable)
-    
-                        session["timetables"] = [
-                            timetable.__dict__ for timetable in studysession.timetables
-                        ]
-    
-                        new_timetable = {
-                            "session": timetable.session,
-                            "day": timetable.day,
-                            "course_unit": timetable.course_unit,
-                            "lecturer": timetable.lecturer,
-                            "start_time": timetable.start_time,
-                            "end_time": timetable.end_time
-                        }
-    
-                        with open("timetable.json", "r") as doc:
-                            Timetable_list = json.load(doc)
-    
-                        with open("timetable.json", "w") as doc:
-                            Timetable_list.append(new_timetable)
-                            json.dump(Timetable_list, doc, indent=4)
-    
-                        with open("studysession.json", "w") as doc:
-                            json.dump(Studysession_list, doc, indent=4)
-    
-                        break
-    
-                add_timetable = input("Do you want to add more timetable(Y/N): ")
-                if add_timetable == "Y":
-                    continue
-                else:
+                        for t in session["timetables"]
+                    ]
+
+                    timetable_id = Timetable.generate_id()
+                    day = input("Enter day: ")
+                    course_unit = input("Enter course unit: ")
+                    lecturer = input("Enter lecturer: ")
+                    start_time = input("Enter start time: ")
+                    end_time = input("Enter end time: ")
+
+                    timetable = Timetable(timetable_id, day, course_unit, lecturer, start_time, end_time)
+
+                    studysession.add_timetable(timetable)
+
+                    session["timetables"] = [
+                        timetable.__dict__ for timetable in studysession.timetables
+                    ]
+
+                    with open("studysession.json", "w") as doc:
+                        json.dump(Studysession_list, doc, indent=4)
+
+                    new_timetable = {
+                        "session": timetable.session,
+                        "day": timetable.day,
+                        "course_unit": timetable.course_unit,
+                        "lecturer": timetable.lecturer,
+                        "start_time": timetable.start_time,
+                        "end_time": timetable.end_time
+                    }
+
+                    with open("timetable.json", "r") as doc:
+                        Timetable_list = json.load(doc)
+
+                    with open("timetable.json", "w") as doc:
+                        Timetable_list.append(new_timetable)
+                        json.dump(Timetable_list, doc, indent=4)
+
                     break
+            else:
+                print("Study session not found")
+
+            add_timetable = input("Do you want to add more timetable(Y/N): ")
+            if add_timetable == "Y":
+                continue
+            else:
+                break
+
 
     elif choice == "6":
         while True:
