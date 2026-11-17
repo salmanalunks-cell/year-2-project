@@ -4,5 +4,11 @@
         "academic_year": "2",
         "semester": "1",
         "timetables": []
+    },
+    {
+        "study_session_id": "SS-5",
+        "academic_year": "1",
+        "semester": "2",
+        "timetables": []
     }
 ]
