@@ -1,57 +1,82 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Student and Lecturer Attendance Web Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f2f5f9;
+            color: #222;
+        }
+        header {
+            background: #173b68;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        nav {
+            background: #102c4d;
+            padding: 15px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 50px auto;
+            padding: 35px;
+            background: white;
+            text-align: center;
+            border-radius: 10px;
+        }
+        .button {
+            display: inline-block;
+            background: #1769aa;
+            color: white;
+            padding: 13px 22px;
+            margin: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background: #104b7c;
+        }
+    </style>
 </head>
-
 <body>
 
-    <h1>WELCOME TO MY STUDENT AND LECTURER ATTENDANCE WEB PAGE</h1>
+<header>
+    <h1>Student and Lecturer Attendance Management System</h1>
+    <p>Welcome to the attendance management portal</p>
+</header>
 
+<nav>
+    <a href="{{ url_for('home_page') }}">Home</a>
+    <a href="{{ url_for('main_page') }}">Attendance Records</a>
+    <a href="{{ url_for('attendance_page') }}">Register Attendance</a>
+</nav>
+
+<div class="container">
+    <h2>Welcome</h2>
     <p>
-        This is a Graphical User Interface that runs in a browser
-        to enable users to enter student and lecturer attendance
-        information required for processing in Python.
+        This system helps manage student and lecturer registration
+        and keeps attendance records in one place.
     </p>
 
-    <h3>Go to Other Pages</h3>
+    <a class="button" href="{{ url_for('attendance_page') }}">
+        Register Student or Lecturer
+    </a>
 
-    <a href="activity.html">Student  and lecturer page</a>
-    <a href="attendance.html">attendance</a>
-
-    <h2>Website Features</h2>
-
-    <!-- Unordered list -->
-    <ul>
-        <li>Manage student attendance</li>
-        <li>Manage lecturer attendance</li>
-        <li>View student information</li>
-        <li>View lecturer information</li>
-        <li>Record and monitor attendance</li>
-    </ul>
-
-    <h2>How to Use This Website</h2>
-
-    <!-- Ordered list -->
-    <ol>
-        <li>Open the main page.</li>
-        <li>View or manage student attendance.</li>
-        <li>Record lecturer attendance.</li>
-        <li>Open the project page to manage attendance information.</li>
-    </ol>
-
-    <h2>Go to Other Pages</h2>
-
-    <!-- Unordered list -->
-    <ul>
-        <li><a href="activity.html"> Page</a></li>
-        <li><a href="attendance.html">Project Page</a></li>
-    </ul>
-
-    <footer>
-        <p>&copy; 2026 Student and Lecturer Attendance Web Page</p>
-    </footer>
+    <a class="button" href="{{ url_for('main_page') }}">
+        View Attendance Records
+    </a>
+</div>
 
 </body>
 </html>

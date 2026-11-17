@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Attendance</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            color: #333;
+        }
+
+        header {
+            background: #183153;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        nav {
+            background: #24476b;
+            padding: 15px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 15px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        form {
+            display: grid;
+            gap: 12px;
+        }
+
+        input, select, button {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: #183153;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #24476b;
+        }
+
+        .error {
+            color: #b00020;
+            background: #ffe8e8;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #183153;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+
+        footer {
+            background: #183153;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Attendance Registration</h1>
+    <p>Register Student and Lecturer Attendance</p>
+</header>
+
+<nav>
+    <a href="{{ url_for('home_page') }}">Home</a>
+    <a href="{{ url_for('main_page') }}">Dashboard</a>
+    <a href="{{ url_for('attendance_page') }}">Register Attendance</a>
+</nav>
+
+<div class="container">
+
+    <h2>Enter Attendance Details</h2>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form action="{{ url_for('add_attendance') }}" method="POST">
+
+        <label for="firstname">First Name:</label>
+        <input type="text" id="firstname" name="first_name"
+               placeholder="Enter first name" required>
+
+        <label for="lastname">Last Name:</label>
+        <input type="text" id="lastname" name="last_name"
+               placeholder="Enter last name" required>
+
+        <label for="registration">Registration/Staff Number:</label>
+        <input type="text" id="registration" name="reg_no"
+               placeholder="Enter registration or staff number" required>
+
+        <label for="course">Course/Subject:</label>
+        <input type="text" id="course" name="course"
+               placeholder="Enter course or subject" required>
+
+        <label for="category">Select Category:</label>
+        <select id="category" name="category" required>
+            <option value="">Choose category</option>
+            <option value="student">Student</option>
+            <option value="lecturer">Lecturer</option>
+        </select>
+
+        <label for="date">Attendance Date:</label>
+        <input type="date" id="date" name="date" required>
+
+        <label for="status">Attendance Status:</label>
+        <select id="status" name="status" required>
+            <option value="">Choose status</option>
+            <option value="present">Present</option>
+            <option value="absent">Absent</option>
+            <option value="late">Late</option>
+        </select>
+
+        <button type="submit">Save Attendance</button>
+
+    </form>
+
+   
+    
