@@ -1,4 +1,4 @@
-from project import Student, Lecturer, Course, CourseUnit, Studysession, Timetable, StudentAttendance, LecturerAttendance
+from project import CourseUnit, Student, Lecturer, Course, CourseUnit, Studysession, Timetable, StudentAttendance, LecturerAttendance
 import json
 
 

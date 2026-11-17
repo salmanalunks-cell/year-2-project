@@ -19,6 +19,7 @@ class Course:
         al = "C-"
         cls.course +=1
         return al + str(cls.course)
+
     
     
     def __str__(self):
@@ -26,10 +27,11 @@ class Course:
 
 class CourseUnit:
     courseunit = 0
-    def __init__(self,courseunit_id, courseunit_name, courseunit_code,  credit_units):
+    def __init__(self,courseunit_id, courseunit_name, courseunit_code, course, credit_units):
         self.courseunit_id = courseunit_id
         self.courseunit_name = courseunit_name
         self.courseunit_code = courseunit_code
+        self.course = course
         self.credit_units = credit_units
 
     
@@ -120,6 +122,8 @@ class Timetable:
         self.start_time = start_time
         self.end_time = end_time
 
+         
+        
     @classmethod
     def generate_id(cls):
         tt= "Timetable-"
@@ -138,15 +142,26 @@ class Studysession:
         self.study_session_id = study_session_id
         self.academic_year = academic_year
         self.semester = semester
-        
+
+#composition
+        self.timetables = []
     @classmethod
     def generate_id(cls):
         s = "SS-"
         cls.studysession +=1
         return s + str(cls.studysession)
 
+
+
+    def add_timetable(self, timetable):
+        self.timetables.append(timetable)
+
     def __str__(self):
         return f"{self.academic_year} - {self.semester} - {self.get_status()}"
+
+    def display_timetables(self):
+        for timetable in self.timetables:
+            print(timetable)
     
 
 class Attendance(ABC):

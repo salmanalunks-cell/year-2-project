@@ -1,1 +1,14 @@
-[]
+[
+    {
+        "lecturerattendance_id": "LA-1",
+        "date": "25/06/2026",
+        "lecturer_id": "L-001",
+        "status": "Taught"
+    },
+    {
+        "lecturerattendance_id": "LA-2",
+        "date": "25/06/2026",
+        "lecturer_id": "L-001",
+        "status": "Taught"
+    }
+]
