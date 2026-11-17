@@ -14,5 +14,21 @@
             "course_code": "BSCS",
             "faculty": "Faculty of Science"
         }
+    },
+    {
+        "student_id": "St-1",
+        "student_first_name": "salma",
+        "student_last_name": "ali",
+        "contact": "07878787",
+        "registration_number": "225",
+        "year_of_study": "2",
+        "gender": "female",
+        "email": "salmaali@iuiu.ac",
+        "course": {
+            "course_id": "C1010",
+            "course_name": "computer science",
+            "course_code": "BSCS",
+            "faculty": "Faculty of Science"
+        }
     }
 ]

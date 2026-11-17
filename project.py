@@ -120,11 +120,12 @@ class Timetable:
 class Studysession:
     studysession = 0
 
-    def __init__(self, study_session_id, academic_year, semester):
+    def __init__(self, study_session_id, academic_year, semester, timetable):
         self.study_session_id = study_session_id
         self.academic_year = academic_year
         self.semester = semester
-        
+        self.timetable = timetable
+
 
     @classmethod
     def generate_id(cls):
@@ -134,7 +135,7 @@ class Studysession:
 
 
     def __str__(self):
-        return f"{self.study_session_id} - {self.academic_year} - {self.semester}"
+        return f"{self.study_session_id} - {self.academic_year} - {self.semester} - {self.timetable}"
 
 
 class Attendance(ABC):

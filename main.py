@@ -186,17 +186,22 @@ while True:
 
     elif choice == "6":
         while True:
+            
             study_session_id = Studysession.generate_id()
             academic_year = input("Enter the academic year: ")
             semester = input("Enter the semester: ")
 
-            studysession = Studysession(study_session_id, academic_year, semester)
+            my_timetable = Timetable("Timetable-1", "Monday", "CS101", "Lec-1", "9:00 AM", "11:00 AM")
+            studysession = Studysession(study_session_id, academic_year, semester,my_timetable)
 
+         
             new_studysession = {
                 "study_session_id": studysession.study_session_id,
                 "academic_year": studysession.academic_year,
                 "semester": studysession.semester
+                "timetable":studysession.timetable.__dict__
             }
+
 
             with open("studysession.json", "r") as doc:
                 Studysession_list = json.load(doc)
