@@ -1,4 +1,5 @@
 
+
 from project import CourseUnit, Student, Lecturer, Course, Studysession, Timetable, StudentAttendance, LecturerAttendance
 import json
 
@@ -48,7 +49,10 @@ while True:
 
     elif choice == "2":
         while True:
-            courseunit_id = CourseUnit.generate_id()
+            with open("courseunit.json", "r") as doc:
+                Courseunit_list = json.load(doc)
+
+            courseunit_id = "CU-" + str(len(Courseunit_list) + 1)
             courseunit_name = input("Enter course unit name: ")
             courseunit_code = input("Enter course unit code: ")
             course = input("Enter course: ")
@@ -64,9 +68,6 @@ while True:
                 "credit_units": courseunit.credit_units
             }
 
-            with open("courseunit.json", "r") as doc:
-                Courseunit_list = json.load(doc)
-
             with open("courseunit.json", "w") as doc:
                 Courseunit_list.append(new_courseunit)
                 json.dump(Courseunit_list, doc, indent=4)
@@ -81,7 +82,10 @@ while True:
         while True:
             my_course = Course("C1010", "computer science", "BSCS", "Faculty of Science")
 
-            student_id = Student.generate_id()
+            with open("student.json", "r") as doc:
+                Student_list = json.load(doc)
+
+            student_id = "S-" + str(len(Student_list) + 1)
             student_first_name = input("Enter student's first name: ")
             student_last_name = input("Enter student's last name: ")
             contact = input("Enter student contact number: ")
@@ -100,11 +104,13 @@ while True:
                 "year_of_study": student.year_of_study,
                 "gender": student.gender,
                 "email": student.get_email(),
-                "course": student.course.__dict__
+                "course": {
+                    "course_id": student.course.course_id,
+                    "course_name": student.course.course_name,
+                    "course_code": student.course.course_code,
+                    "faculty": student.course.faculty
+                }
             }
-
-            with open("student.json", "r") as doc:
-                Student_list = json.load(doc)
 
             with open("student.json", "w") as doc:
                 Student_list.append(new_student)
@@ -118,7 +124,10 @@ while True:
 
     elif choice == "4":
         while True:
-            lecturer_id = Lecturer.generate_id()
+            with open("lecturer.json", "r") as doc:
+                Lecturer_list = json.load(doc)
+
+            lecturer_id = "L-" + str(len(Lecturer_list) + 1)
             lecturer_first_name = input("Enter Lecturer's first name: ")
             lecturer_last_name = input("Enter lecturer's last name: ")
             faculty = input("Enter the faculty: ")
@@ -136,11 +145,8 @@ while True:
                 "gender": lecturer.gender,
                 "contact": lecturer.contact,
                 "department": lecturer.department,
-                "email ": lecturer.get_email()
+                "email": lecturer.get_email()
             }
-
-            with open("lecturer.json", "r") as doc:
-                Lecturer_list = json.load(doc)
 
             with open("lecturer.json", "w") as doc:
                 Lecturer_list.append(new_lecturer)
@@ -167,13 +173,7 @@ while True:
                         session["semester"]
                     )
 
-                    studysession.timetables = [
-                        Timetable(
-                            t["session"], t["day"], t["course_unit"],
-                            t["lecturer"], t["start_time"], t["end_time"]
-                        )
-                        for t in session["timetables"]
-                    ]
+                    studysession.load_timetables(session["timetables"])
 
                     timetable_id = Timetable.generate_id()
                     day = input("Enter day: ")
@@ -186,17 +186,7 @@ while True:
 
                     studysession.add_timetable(timetable)
 
-                    session["timetables"] = []
-
-                    for t in studysession.timetables:
-                        session["timetables"].append({
-                            "session": t.session,
-                            "day": t.day,
-                            "course_unit": t.course_unit,
-                            "lecturer": t.lecturer,
-                            "start_time": t.start_time,
-                            "end_time": t.end_time
-                        })
+                    session["timetables"] = studysession.get_timetables()
 
                     with open("studysession.json", "w") as doc:
                         json.dump(Studysession_list, doc, indent=4)
@@ -227,9 +217,11 @@ while True:
             else:
                 break
 
-
     elif choice == "6":
         while True:
+            with open("studysession.json", "r") as doc:
+                Studysession_list = json.load(doc)
+
             study_session_id = Studysession.generate_id()
             academic_year = input("Enter the academic year: ")
             semester = input("Enter the semester: ")
@@ -243,9 +235,6 @@ while True:
                 "timetables": []
             }
 
-            with open("studysession.json", "r") as doc:
-                Studysession_list = json.load(doc)
-
             with open("studysession.json", "w") as doc:
                 Studysession_list.append(new_studysession)
                 json.dump(Studysession_list, doc, indent=4)
@@ -258,23 +247,21 @@ while True:
 
     elif choice == "7":
         while True:
-            attendance_id = StudentAttendance.generate_id()
+            with open("studentattend.json", "r") as doc:
+                StudentAttendance_list = json.load(doc)
+
+            attendance_id = "SA-" + str(len(StudentAttendance_list) + 1)
             date = input("Enter the date(dd/mm/yyyy): ")
             student_id = input("Enter student id (s-000): ")
-            timetable = input("Enter timetable: ")
 
-            studentattendance = StudentAttendance(attendance_id, date, student_id, timetable)
+            studentattendance = StudentAttendance(attendance_id, date, student_id)
 
             new_studentattendance = {
                 "studentattendance": studentattendance.id,
                 "date": studentattendance.date,
-                "student_id": studentattendance.student_id,
-                "timetable": studentattendance.timetable,
+                "student": studentattendance.student,
                 "status": studentattendance.get_status()
             }
-
-            with open("studentattend.json", "r") as doc:
-                StudentAttendance_list = json.load(doc)
 
             with open("studentattend.json", "w") as doc:
                 StudentAttendance_list.append(new_studentattendance)
@@ -288,7 +275,10 @@ while True:
 
     elif choice == "8":
         while True:
-            lecturerattendance_id = LecturerAttendance.generate_id()
+            with open("lecturerattend.json", "r") as doc:
+                LecturerAttendance_list = json.load(doc)
+
+            lecturerattendance_id = "LA-" + str(len(LecturerAttendance_list) + 1)
             date = input("Enter the date(dd/mm/yyyy): ")
             lecturer_id = input("Enter the lecturer id: ")
 
@@ -297,12 +287,9 @@ while True:
             new_lecturerattendance = {
                 "lecturerattendance_id": lecturerattendance.id,
                 "date": lecturerattendance.date,
-                "lecturer_id": lecturerattendance.lecturer_id,
+                "lecturer": lecturerattendance.lecturer,
                 "status": lecturerattendance.get_status()
             }
-
-            with open("lecturerattend.json", "r") as doc:
-                LecturerAttendance_list = json.load(doc)
 
             with open("lecturerattend.json", "w") as doc:
                 LecturerAttendance_list.append(new_lecturerattendance)
