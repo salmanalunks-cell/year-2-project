@@ -13,7 +13,6 @@ StudentAttendance_list = []
 LecturerAttendance_list = []
 
 
-
 while True:
     print("\n1.Course registration\n2.Add course units\n3.Student Registration\n4.Lecturer Registration\n5.Timetable\n6.Study Session\n7.Student Attendance\n8.Lecturer Attendance\n9.Exit\n")
     choice = input("Enter your choice(1-9): ")
@@ -155,73 +154,30 @@ while True:
 
     elif choice == "5":
         while True:
-            with open("studysession.json", "r") as doc:
-                Studysession_list = json.load(doc)
+            session = Timetable.generate_id()
+            day = input("Enter day: ")
+            course_unit = input("Enter course unit: ")
+            lecturer = input("Enter lecturer: ")
+            start_time = input("Enter start time: ")
+            end_time = input("Enter end time: ")
 
-            study_session_id = input("Enter study session ID: ")
+            timetable = Timetable(session, day, course_unit, lecturer, start_time, end_time)
 
-            selected_session = None
+            new_timetable = {
+                "session": timetable.session,
+                "day": timetable.day,
+                "course_unit": timetable.course_unit,
+                "lecturer": timetable.lecturer,
+                "start_time": timetable.start_time,
+                "end_time": timetable.end_time
+            }
 
-            for session in Studysession_list:
-                if session["study_session_id"] == study_session_id:
-                    selected_session = session
-                    break
+            with open("timetable.json", "r") as doc:
+                Timetable_list = json.load(doc)
 
-            if selected_session is None:
-                print("Study session not found")
-            else:
-                studysession = Studysession(
-                    selected_session["study_session_id"],
-                    selected_session["academic_year"],
-                    selected_session["semester"]
-                )
-
-                for old_timetable in selected_session["timetables"]:
-                    timetable = Timetable(
-                        old_timetable["session"],
-                        old_timetable["day"],
-                        old_timetable["course_unit"],
-                        old_timetable["lecturer"],
-                        old_timetable["start_time"],
-                        old_timetable["end_time"]
-                    )
-                    studysession.add_timetable(timetable)
-
-                day = input("Enter day: ")
-                course_unit = input("Enter course unit: ")
-                lecturer = input("Enter lecturer: ")
-                start_time = input("Enter start time: ")
-                end_time = input("Enter end time: ")
-
-                timetable = Timetable(study_session_id, day, course_unit, lecturer, start_time, end_time)
-
-                studysession.add_timetable(timetable)
-
-                new_timetable = {
-                    "session": timetable.session,
-                    "day": timetable.day,
-                    "course_unit": timetable.course_unit,
-                    "lecturer": timetable.lecturer,
-                    "start_time": timetable.start_time,
-                    "end_time": timetable.end_time
-                }
-
-                with open("timetable.json", "r") as doc:
-                    Timetable_list = json.load(doc)
-
-                with open("timetable.json", "w") as doc:
-                    Timetable_list.append(new_timetable)
-                    json.dump(Timetable_list, doc, indent=4)
-
-                selected_session["timetables"] = []
-
-                for timetable in studysession.timetables:
-                    selected_session["timetables"].append(timetable.__dict__)
-
-                with open("studysession.json", "w") as doc:
-                    json.dump(Studysession_list, doc, indent=4)
-
-                print("Timetable added successfully")
+            with open("timetable.json", "w") as doc:
+                Timetable_list.append(new_timetable)
+                json.dump(Timetable_list, doc, indent=4)
 
             add_timetable = input("Do you want to add more timetable(Y/N): ")
             if add_timetable == "Y":
