@@ -1,3 +1,4 @@
+
 import json
 from abc import ABC, abstractmethod
 
@@ -133,6 +134,7 @@ class Studysession:
 
     def load_timetables(self, timetable_list):
         self.timetables = []
+
         for t in timetable_list:
             timetable = Timetable(
                 t["session"],
@@ -146,6 +148,7 @@ class Studysession:
 
     def get_timetables(self):
         timetable_list = []
+
         for t in self.timetables:
             new_timetable = {
                 "session": t.session,
@@ -156,14 +159,12 @@ class Studysession:
                 "end_time": t.end_time
             }
             timetable_list.append(new_timetable)
+
         return timetable_list
 
     def save_timetables(self):
-        try:
-            with open("studysession.json", "r") as doc:
-                Studysession_list = json.load(doc)
-        except FileNotFoundError:
-            Studysession_list = []
+        with open("studysession.json", "r") as doc:
+            Studysession_list = json.load(doc)
 
         for session in Studysession_list:
             if session["study_session_id"] == self.study_session_id:
@@ -208,8 +209,11 @@ class StudentAttendance(Attendance):
         cls.studentattendance += 1
         return "SA-" + str(cls.studentattendance)
 
+    def get_status(self):
+        return self._status
+
     def __str__(self):
-        return f"{self.student} - {self.date} - {self.get_status}"
+        return f"{self.student} - {self.date} - {self.get_status()}"
 
 
 class LecturerAttendance(Attendance):
@@ -224,5 +228,9 @@ class LecturerAttendance(Attendance):
         cls.lecturerattendance += 1
         return "LA-" + str(cls.lecturerattendance)
 
+    def get_status(self):
+        return self._status
+
     def __str__(self):
-        return f"{self.lecturer} - {self.date} - {self.get_status}"
+        return f"{self.lecturer} - {self.date} - {self.get_status()}"
+
