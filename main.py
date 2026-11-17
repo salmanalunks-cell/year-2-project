@@ -158,6 +158,8 @@ while True:
             else:
                 break
 
+
+  
     elif choice == "5":
         while True:
             with open("studysession.json", "r") as doc:
@@ -182,14 +184,13 @@ while True:
                     start_time = input("Enter start time: ")
                     end_time = input("Enter end time: ")
 
-                    timetable = Timetable(timetable_id, day, course_unit, lecturer, start_time, end_time)
+                    timetable = Timetable(
+                        timetable_id, day, course_unit,
+                        lecturer, start_time, end_time
+                    )
 
                     studysession.add_timetable(timetable)
-
-                    session["timetables"] = studysession.get_timetables()
-
-                    with open("studysession.json", "w") as doc:
-                        json.dump(Studysession_list, doc, indent=4)
+                    studysession.save_timetables()
 
                     new_timetable = {
                         "session": timetable.session,
@@ -207,6 +208,7 @@ while True:
                         Timetable_list.append(new_timetable)
                         json.dump(Timetable_list, doc, indent=4)
 
+                    print("Timetable added successfully!")
                     break
             else:
                 print("Study session not found")
@@ -216,7 +218,6 @@ while True:
                 continue
             else:
                 break
-
     elif choice == "6":
         while True:
             with open("studysession.json", "r") as doc:

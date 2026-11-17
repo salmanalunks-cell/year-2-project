@@ -1,6 +1,12 @@
 [
     {
-        "study_session_id": "SS-7",
+        "study_session_id": "SS-8",
+        "academic_year": "2",
+        "semester": "1",
+        "timetables": []
+    },
+    {
+        "study_session_id": "SS-9",
         "academic_year": "2",
         "semester": "1",
         "timetables": []
