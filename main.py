@@ -3,6 +3,24 @@ from project import CourseUnit, Student, Lecturer, Course, Studysession, Timetab
 import json
 
 
+def load_records(filename):
+    # Avoid json.load failing when a data file is empty or not yet created.
+    """Load a JSON list, treating an empty file as an empty list."""
+    try:
+        with open(filename, "r", encoding="utf-8") as doc:
+            records = json.load(doc)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []
+    if not isinstance(records, list):
+        raise ValueError(f"{filename} must contain a JSON list")
+    return records
+
+
+def save_records(filename, records):
+    with open(filename, "w", encoding="utf-8") as doc:
+        json.dump(records, doc, indent=4)
+
+
 Course_list = []
 Student_list = []
 Lecturer_list = []
@@ -33,12 +51,9 @@ while True:
                 "faculty": course.faculty
             }
 
-            with open("course.json", "r") as doc:
-                Course_list = json.load(doc)
-
-            with open("course.json", "w") as doc:
-                Course_list.append(new_course)
-                json.dump(Course_list, doc, indent=4)
+            Course_list = load_records("course.json")
+            Course_list.append(new_course)
+            save_records("course.json", Course_list)
 
             add_course = input("Do you have more courses to add (Y/N): ")
             if add_course == "Y":
@@ -51,23 +66,23 @@ while True:
             courseunit_id = CourseUnit.generate_id()
             courseunit_name = input("Enter course unit name: ")
             courseunit_code = input("Enter course unit code: ")
+            course = input("Enter course name or code: ")
             credit_units = input("Enter credit units: ")
 
-            courseunit = CourseUnit(courseunit_id, courseunit_name, courseunit_code, credit_units)
+            # CourseUnit requires five arguments, including the course.
+            courseunit = CourseUnit(courseunit_id, courseunit_name, courseunit_code, course, credit_units)
 
             new_courseunit = {
                 "courseunit_id": courseunit.courseunit_id,
                 "courseunit_name": courseunit.courseunit_name,
                 "courseunit_code": courseunit.courseunit_code,
+                "course": courseunit.course,
                 "credit_units": courseunit.credit_units
             }
 
-            with open("courseunit.json", "r") as doc:
-                Courseunit_list = json.load(doc)
-
-            with open("courseunit.json", "w") as doc:
-                Courseunit_list.append(new_courseunit)
-                json.dump(Courseunit_list, doc, indent=4)
+            Courseunit_list = load_records("courseunit.json")
+            Courseunit_list.append(new_courseunit)
+            save_records("courseunit.json", Courseunit_list)
 
             add_courseunit = input("Do you have more coursunits to add(Y/N): ")
             if add_courseunit == "Y":
@@ -101,12 +116,9 @@ while True:
                 "course": student.course.__dict__
             }
 
-            with open("student.json", "r") as doc:
-                Student_list = json.load(doc)
-
-            with open("student.json", "w") as doc:
-                Student_list.append(new_student)
-                json.dump(Student_list, doc, indent=4)
+            Student_list = load_records("student.json")
+            Student_list.append(new_student)
+            save_records("student.json", Student_list)
 
             add_student = input("Do you have more students to add (Y/N): ")
             if add_student == "Y":
@@ -134,15 +146,13 @@ while True:
                 "gender": lecturer.gender,
                 "contact": lecturer.contact,
                 "department": lecturer.department,
-                "email ": lecturer.get_email()
+                # Keep the key consistent with the student email field (no trailing space).
+                "email": lecturer.get_email()
             }
 
-            with open("lecturer.json", "r") as doc:
-                Lecturer_list = json.load(doc)
-
-            with open("lecturer.json", "w") as doc:
-                Lecturer_list.append(new_lecturer)
-                json.dump(Lecturer_list, doc, indent=4)
+            Lecturer_list = load_records("lecturer.json")
+            Lecturer_list.append(new_lecturer)
+            save_records("lecturer.json", Lecturer_list)
 
             add_lecturer = input("Do you have more lecturers to add (Y/N): ")
             if add_lecturer == "Y":
@@ -170,13 +180,9 @@ while True:
                 "end_time": timetable.end_time
             }
 
-            with open("timetable.json", "r") as doc:
-                Timetable_list = json.load(doc)
-
+            Timetable_list = load_records("timetable.json")
             Timetable_list.append(new_timetable)
-
-            with open("timetable.json", "w") as doc:
-                json.dump(Timetable_list, doc, indent=4)
+            save_records("timetable.json", Timetable_list)
 
             add_timetable = input("Do you want to add more timetable(Y/N): ")
             if add_timetable == "Y":
@@ -186,29 +192,45 @@ while True:
 
     elif choice == "6":
         while True:
-            
+            # Study sessions must reference a timetable that was actually registered.
+            available_timetables = load_records("timetable.json")
+            if not available_timetables:
+                print("No timetables are registered. Add a timetable first using option 5.")
+                break
+
             study_session_id = Studysession.generate_id()
             academic_year = input("Enter the academic year: ")
             semester = input("Enter the semester: ")
 
-            my_timetable = Timetable("Timetable-1", "Monday", "CS101", "Lec-1", "9:00 AM", "11:00 AM")
-            studysession = Studysession(study_session_id, academic_year, semester,my_timetable)
+            print("Available timetables:")
+            for index, timetable_data in enumerate(available_timetables, start=1):
+                print(
+                    f"{index}. {timetable_data['session']} | {timetable_data['day']} | "
+                    f"{timetable_data['course_unit']} | {timetable_data['lecturer']} | "
+                    f"{timetable_data['start_time']}-{timetable_data['end_time']}"
+                )
+
+            timetable_choice = input("Choose a timetable number: ")
+            if not timetable_choice.isdigit() or not 1 <= int(timetable_choice) <= len(available_timetables):
+                print("Invalid timetable choice. Study session was not saved.")
+                continue
+
+            # Rebuild the selected saved record as a Timetable object for Studysession.
+            my_timetable = Timetable(**available_timetables[int(timetable_choice) - 1])
+            studysession = Studysession(study_session_id, academic_year, semester, my_timetable)
 
          
             new_studysession = {
                 "study_session_id": studysession.study_session_id,
                 "academic_year": studysession.academic_year,
-                "semester": studysession.semester
-                "timetable":studysession.timetable.__dict__
+                "semester": studysession.semester,
+                "timetable": studysession.timetable.__dict__,
             }
 
 
-            with open("studysession.json", "r") as doc:
-                Studysession_list = json.load(doc)
-
-            with open("studysession.json", "w") as doc:
-                Studysession_list.append(new_studysession)
-                json.dump(Studysession_list, doc, indent=4)
+            Studysession_list = load_records("studysession.json")
+            Studysession_list.append(new_studysession)
+            save_records("studysession.json", Studysession_list)
 
             add_studysession = input("Do you want to add more study sessions(Y/N): ")
             if add_studysession == "Y":
@@ -233,12 +255,9 @@ while True:
                 "status": studentattendance.get_status()
             }
 
-            with open("studentattend.json", "r") as doc:
-                StudentAttendance_list = json.load(doc)
-
-            with open("studentattend.json", "w") as doc:
-                StudentAttendance_list.append(new_studentattendance)
-                json.dump(StudentAttendance_list, doc, indent=4)
+            StudentAttendance_list = load_records("studentattend.json")
+            StudentAttendance_list.append(new_studentattendance)
+            save_records("studentattend.json", StudentAttendance_list)
 
             add_studentattendance = input("Do you want to add more student attendance(Y/N): ")
             if add_studentattendance == "Y":
@@ -261,12 +280,9 @@ while True:
                 "status": lecturerattendance.get_status()
             }
 
-            with open("lecturerattend.json", "r") as doc:
-                LecturerAttendance_list = json.load(doc)
-
-            with open("lecturerattend.json", "w") as doc:
-                LecturerAttendance_list.append(new_lecturerattendance)
-                json.dump(LecturerAttendance_list, doc, indent=4)
+            LecturerAttendance_list = load_records("lecturerattend.json")
+            LecturerAttendance_list.append(new_lecturerattendance)
+            save_records("lecturerattend.json", LecturerAttendance_list)
 
             add_lecturerattendance = input("Do you want to add more lecturer attendances(Y/N): ")
             if add_lecturerattendance == "Y":
