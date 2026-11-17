@@ -152,9 +152,6 @@ while True:
             else:
                 break
 
-
-
-   
     elif choice == "5":
         while True:
             with open("studysession.json", "r") as doc:
@@ -189,9 +186,17 @@ while True:
 
                     studysession.add_timetable(timetable)
 
-                    session["timetables"] = [
-                        timetable.__dict__ for timetable in studysession.timetables
-                    ]
+                    session["timetables"] = []
+
+                    for t in studysession.timetables:
+                        session["timetables"].append({
+                            "session": t.session,
+                            "day": t.day,
+                            "course_unit": t.course_unit,
+                            "lecturer": t.lecturer,
+                            "start_time": t.start_time,
+                            "end_time": t.end_time
+                        })
 
                     with open("studysession.json", "w") as doc:
                         json.dump(Studysession_list, doc, indent=4)
