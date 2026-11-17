@@ -1,18 +1,1 @@
-[
-    {
-        "session": "Timetable-1",
-        "day": "monday",
-        "course_unit": "programming",
-        "lecturer": "mr hakim",
-        "start_time": "11:00",
-        "end_time": "1:00"
-    },
-    {
-        "session": "Timetable-2",
-        "day": "monday",
-        "course_unit": "programming",
-        "lecturer": "mr hakim",
-        "start_time": "11:00",
-        "end_time": "1:00"
-    }
-]
+[]

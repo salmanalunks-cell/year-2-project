@@ -1,55 +1,63 @@
-
-import json
-from abc import ABC, abstractmethod
-
+from abc import ABC,abstractmethod
 
 class Course:
     course = 0
 
-    def __init__(self, course_id, course_name, course_code, faculty):
+    def __init__(self ,course_id, course_name, course_code, faculty):
+        
+        
+            
         self.course_id = course_id
         self.course_name = course_name
         self.course_code = course_code
         self.faculty = faculty
-
+        
+    
+            
     @classmethod
     def generate_id(cls):
-        s = "C-"
-        cls.course += 1
-        return s + str(cls.course)
+        al = "C-"
+        cls.course +=1
+        return al + str(cls.course)
 
+    
+    
     def __str__(self):
-        return f"{self.course_name} - {self.course_code} - {self.faculty}"
-
+        return f"{self.course_id} -{self.course_name} - {self.course_code} -({self.faculty})"
 
 class CourseUnit:
     courseunit = 0
-
-    def __init__(self, courseunit_id, courseunit_name, courseunit_code, course, credit_units):
+    def __init__(self,courseunit_id, courseunit_name, courseunit_code,  credit_units):
         self.courseunit_id = courseunit_id
         self.courseunit_name = courseunit_name
         self.courseunit_code = courseunit_code
-        self.course = course
         self.credit_units = credit_units
 
+    
+        
+        
     @classmethod
     def generate_id(cls):
-        s = "CU-"
-        cls.courseunit += 1
-        return s + str(cls.courseunit)
-
+        cn = "CU-"
+        cls. courseunit +=1
+        return cn+ str(cls.courseunit)
+    
     def __str__(self):
-        return f"{self.courseunit_name} - {self.courseunit_code} - {self.credit_units}"
-
+        return f"{self.courseunit_name} -> {self.courseunit_code} -> {self.credit_units} "
+    
+    
+    
 
 class Student:
+    
     student = 0
-
-    def __init__(self, student_id, first_name, last_name, contact, reg_no, year_of_study, gender, course):
+    def __init__(self, student_id, first_name, last_name,  contact, reg_no, year_of_study, gender, course):
+    
         self.student_id = student_id
         self.first_name = first_name
         self.last_name = last_name
         self.contact = contact
+        self.email = self.get_email()
         self.reg_no = reg_no
         self.year_of_study = year_of_study
         self.gender = gender
@@ -57,45 +65,54 @@ class Student:
 
     @classmethod
     def generate_id(cls):
-        s = "S-"
-        cls.student += 1
-        return s + str(cls.student)
-
+        st = "St-"
+        cls.student +=1
+        return st + str(cls.student)
+    
     def get_email(self):
-        return f"{self.first_name.lower()}.{self.last_name.lower()}@university.ac.ug"
-
+        self.email = f" {self.first_name}{self.last_name}@iuiu.ac"
+        return self.email
+        
+        
     def __str__(self):
-        return f"{self.first_name} {self.last_name} - {self.reg_no}"
-
+        return (
+            f"{self.student_id} -> {self.first_name} -> {self.last_name}  -> {self.contact} -> {self.email} -> {self.reg_no} -> {self.year_of_study} -> {self.gender} -> {self.course}"
+        )
+    
 
 class Lecturer:
     lecturer = 0
-
-    def __init__(self, lecturer_id, first_name, last_name, faculty, gender, contact, department):
+    def __init__(self, lecturer_id, first_name, last_name, faculty,gender,  contact,  department):
         self.lecturer_id = lecturer_id
         self.first_name = first_name
         self.last_name = last_name
         self.faculty = faculty
         self.gender = gender
         self.contact = contact
+        self.email = self.get_email()
         self.department = department
 
     @classmethod
     def generate_id(cls):
-        s = "L-"
-        cls.lecturer += 1
-        return s + str(cls.lecturer)
-
+        l = "Lec-"
+        cls.lecturer +=1
+        return l + str(cls.lecturer)
+    
     def get_email(self):
-        return f"{self.first_name.lower()}.{self.last_name.lower()}@university.ac.ug"
-
+        self.email = f" {self.first_name}{self.last_name}@iuiu.ac"
+        return self.email
+    
     def __str__(self):
-        return f"{self.first_name} {self.last_name} - {self.department}"
+        return f"{self.lecturer_id} -> {self.first_name} {self.last_name} -> {self.faculty} ->{self.gender} -> {self.contact} -> {self.email} ->{self.department} "
+    
+
+    
 
 
+    
+    
 class Timetable:
     timetable = 0
-
     def __init__(self, session, day, course_unit, lecturer, start_time, end_time):
         self.session = session
         self.day = day
@@ -106,131 +123,100 @@ class Timetable:
 
     @classmethod
     def generate_id(cls):
-        s = "Timetable-"
-        cls.timetable += 1
-        return s + str(cls.timetable)
-
+        tt= "Timetable-"
+        cls.timetable +=1
+        return tt + str(cls.timetable)
+    
     def __str__(self):
-        return f"{self.session} - {self.day} - {self.course_unit} - {self.lecturer} - {self.start_time} - {self.end_time}"
-
+        return (
+            f"{self.day} | {self.course_unit} | {self.lecturer} | "
+            f"{self.start_time} - {self.end_time}"
+        )
 
 class Studysession:
     studysession = 0
-
     def __init__(self, study_session_id, academic_year, semester):
         self.study_session_id = study_session_id
         self.academic_year = academic_year
         self.semester = semester
-        self.timetables = []
-
+        
     @classmethod
     def generate_id(cls):
         s = "SS-"
-        cls.studysession += 1
+        cls.studysession +=1
         return s + str(cls.studysession)
 
-    def add_timetable(self, timetable):
-        self.timetables.append(timetable)
-
-    def load_timetables(self, timetable_list):
-        self.timetables = []
-
-        for t in timetable_list:
-            timetable = Timetable(
-                t["session"],
-                t["day"],
-                t["course_unit"],
-                t["lecturer"],
-                t["start_time"],
-                t["end_time"]
-            )
-            self.add_timetable(timetable)
-
-    def get_timetables(self):
-        timetable_list = []
-
-        for t in self.timetables:
-            new_timetable = {
-                "session": t.session,
-                "day": t.day,
-                "course_unit": t.course_unit,
-                "lecturer": t.lecturer,
-                "start_time": t.start_time,
-                "end_time": t.end_time
-            }
-            timetable_list.append(new_timetable)
-
-        return timetable_list
-
-    def save_timetables(self):
-        with open("studysession.json", "r") as doc:
-            Studysession_list = json.load(doc)
-
-        for session in Studysession_list:
-            if session["study_session_id"] == self.study_session_id:
-                session["timetables"] = self.get_timetables()
-                break
-
-        with open("studysession.json", "w") as doc:
-            json.dump(Studysession_list, doc, indent=4)
-
     def __str__(self):
-        return f"{self.academic_year} - {self.semester}"
-
-    def display_timetables(self):
-        for timetable in self.timetables:
-            print(timetable)
-
+        return f"{self.academic_year} - {self.semester} - {self.get_status()}"
+    
 
 class Attendance(ABC):
-    def __init__(self, id, date):
+    def __init__(self,id, date):
         self.id = id
         self.date = date
         self._status = 1
-
-    @property
+        
+    
+            
+    @property        
     def get_status(self):
-        return self._status
-
-    @abstractmethod
+            return self._status
+        
+    @abstractmethod        
     def __str__(self):
         pass
-
-
+        
+    
 class StudentAttendance(Attendance):
     studentattendance = 0
-
-    def __init__(self, id, date, student):
-        super().__init__(id, date)
-        self.student = student
+    
+    def __init__(self, id, date, student_id, timetable):
+        super(). __init__(id , date)
+        self.student_id = student_id
+        self.timetable = timetable
+        
 
     @classmethod
     def generate_id(cls):
-        cls.studentattendance += 1
-        return "SA-" + str(cls.studentattendance)
-
+        sa = "SA-"
+        cls. studentattendance +=1
+        return sa + str(cls.studentattendance)
+    
     def get_status(self):
-        return self._status
+        if self._status == 1:
+            return "Present"
+        else:
+            return "Absent"
 
+            
     def __str__(self):
-        return f"{self.student} - {self.date} - {self.get_status()}"
-
-
+        return f"{self.id} -> {self.date} -> {self.get_status} -> {self.student_id} "
+    
 class LecturerAttendance(Attendance):
     lecturerattendance = 0
 
-    def __init__(self, id, date, lecturer):
-        super().__init__(id, date)
-        self.lecturer = lecturer
-
+    def __init__(self, id ,date,  lecturer_id):
+        super(). __init__(id, date)
+        self.lecturer_id = lecturer_id
+            
     @classmethod
     def generate_id(cls):
-        cls.lecturerattendance += 1
-        return "LA-" + str(cls.lecturerattendance)
-
+        la = "LA-"
+        cls.lecturerattendance +=1
+        return la + str(cls.lecturerattendance)
+    
+    
     def get_status(self):
-        return self._status
-
+        if self._status == 1:
+            
+            return "Taught"
+        else:
+            return "Missed"
+    
+    
+        
     def __str__(self):
-        return f"{self.lecturer} - {self.date} - {self.get_status()}"
+        return f"{self.id} -> {self.date} -> {self.lecturer_id}  -> {self.get_status}"
+        
+    
 
