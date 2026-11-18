@@ -1,46 +1,46 @@
 {
     "student_attendance": [
         {
-            "id": 4,
-            "first_name": "salma",
-            "last_name": "malik",
-            "registration": "345",
-            "course": "bit",
+            "id": 2,
+            "first_name": "NALUNKUUMA",
+            "last_name": "SALMA",
+            "registration": "301",
+            "course": "BIT",
             "category": "student",
-            "date": "2067-11-11",
+            "date": "2026-12-11",
+            "status": "present"
+        },
+        {
+            "id": 4,
+            "first_name": "AKELLO",
+            "last_name": "RUTH",
+            "registration": "202",
+            "course": "BIT",
+            "category": "student",
+            "date": "2026-12-11",
             "status": "present"
         }
     ],
     "lecturer_attendance": [
         {
-            "id": 3,
-            "first_name": "SEGUYA",
-            "last_name": "ASAD",
-            "registration": "311-063011-70012",
-            "course": "NETWORKING",
+            "id": 1,
+            "first_name": "RANIA",
+            "last_name": "AISHA",
+            "registration": "201",
+            "course": "BIT",
             "category": "lecturer",
-            "date": "2005-11-11",
+            "date": "2026-12-11",
             "status": "absent"
         },
         {
-            "id": 4,
-            "first_name": "MASANSO",
-            "last_name": "MALIK",
-            "registration": "345-07895-35789",
-            "course": "BCS",
-            "category": "lecturer",
-            "date": "2025-11-11",
-            "status": "present"
-        },
-        {
-            "id": 5,
-            "first_name": "salma",
-            "last_name": "ali",
-            "registration": "345",
+            "id": 3,
+            "first_name": "LUBEGA",
+            "last_name": "SULAIMAN",
+            "registration": "302",
             "course": "BIT",
             "category": "lecturer",
-            "date": "2026-11-11",
-            "status": "present"
+            "date": "2026-12-11",
+            "status": "late"
         }
     ]
 }

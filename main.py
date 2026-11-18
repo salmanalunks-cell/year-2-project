@@ -194,8 +194,11 @@ while True:
             print("Available timetables:")
             available_timetables = load_records("timetable.json")
 
-            for index, timetable_data in enumerate(available_timetables, start=1):
-                print(f"{index}. {timetable_data['session']} | {timetable_data['day']} | {timetable_data['course_unit']} | {timetable_data['lecturer']} | {timetable_data['start_time']} - {timetable_data['end_time']}")
+            number = 1
+
+            for timetable_data in available_timetables:
+                print(f"{number}. {timetable_data['session']} | {timetable_data['day']} | {timetable_data['course_unit']} | {timetable_data['lecturer']} | {timetable_data['start_time']} - {timetable_data['end_time']}")
+                number += 1
 
             timetable_choice = int(input("Choose a timetable number: "))
 
