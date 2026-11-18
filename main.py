@@ -183,8 +183,6 @@ while True:
             else:
                 break
 
-
-    
     elif choice == "6":
         while True:
             study_session_id = Studysession.generate_id()
@@ -202,7 +200,16 @@ while True:
 
             timetable_choice = int(input("Choose a timetable number: "))
 
-            my_timetable = Timetable(**available_timetables[timetable_choice - 1])
+            selected_timetable = available_timetables[timetable_choice - 1]
+
+            my_timetable = Timetable(
+                selected_timetable["session"],
+                selected_timetable["day"],
+                selected_timetable["course_unit"],
+                selected_timetable["lecturer"],
+                selected_timetable["start_time"],
+                selected_timetable["end_time"]
+            )
 
             studysession = Studysession(study_session_id, academic_year, semester, my_timetable)
 
