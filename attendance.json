@@ -19,6 +19,16 @@
             "category": "student",
             "date": "2026-12-11",
             "status": "present"
+        },
+        {
+            "id": 5,
+            "first_name": "ATIM",
+            "last_name": "KENETH",
+            "registration": "203",
+            "course": "BIT",
+            "category": "student",
+            "date": "2026-12-11",
+            "status": "present"
         }
     ],
     "lecturer_attendance": [
